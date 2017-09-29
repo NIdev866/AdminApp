@@ -44,9 +44,6 @@ class JobseekerParent extends Component {
 
                 <div style={{width: "40%", float: "right"}}>
                   <div style={{marginBottom: "90px", paddingLeft: "10px", paddingRight: "10px", borderLeft: "1px solid grey", marginTop: "-20px"}}>
-                    <h2>PLEASE APPLY FOR JOBS BY REGISTERING WITH US.</h2>
-                    <h3>Select maximum 3 job boxes to apply for them.<br/>
-                        Click on the job to read more about it</h3>
                   </div>
                 </div>
               </div>

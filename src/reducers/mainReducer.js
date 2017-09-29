@@ -1,9 +1,11 @@
-import { SUBMIT_BANK_DETAILS } from '../actions/types.js';
+import { COMPANIES, ALL_CAMPAIGNS } from '../actions/types.js';
 
 export default function(state = {}, action){
     switch(action.type){
-        case SUBMIT_BANK_DETAILS:
-            return { ...state, bankDetailsSubmitted: true }
+        case COMPANIES:
+            return { ...state, companies: action.payload}
+    case ALL_CAMPAIGNS:
+      return { ...state, allCampaigns: action.payload }
     }
 
     return state;

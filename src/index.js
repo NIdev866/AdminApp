@@ -48,7 +48,7 @@ ReactDOM.render(
             <Route exact path="/" component={
               deviceDetect.device == "Windows" || 
               deviceDetect.device == "Macintosh" ||
-              deviceDetect.device == "Linux" ? MobileAdminParent : MobileAdminParent /*MobileAdminParent*/} />
+              deviceDetect.device == "Linux" ? DesktopAdminParent : MobileAdminParent /*MobileAdminParent*/} />
             <Route path='/hue' component={Dupa} />
             <Route path="/create-campaign" component={CreateCampaignParent} />
           </Switch>

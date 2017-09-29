@@ -150,8 +150,8 @@ class FormFirstPage extends Component{
 
 function mapStateToProps(state) {
   return {
-    companies: state.creating_campaign.companies,
-    nestedJobSectors: state.creating_campaign.nestedJobSectors
+    companies: state.main.companies,
+    nestedJobSectors: state.main.nestedJobSectors
   };
 }
 

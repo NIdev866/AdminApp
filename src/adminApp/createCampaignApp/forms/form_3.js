@@ -137,7 +137,7 @@ class FormFirstPage extends Component{
               <MenuItem value="CONTRACT" primaryText="Contract"/>
             </Field>
             <Field name="job_type" component={renderError} />
-                        <div style={{marginTop: "30px", marginBottom: "30px"}}>
+              <div style={{marginTop: "30px", marginBottom: "30px"}}>
               <Field name="salary_type" component={SelectField} 
                   selectedMenuItemStyle={{color: "#00BCD4"}} 
                   underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
