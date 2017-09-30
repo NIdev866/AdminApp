@@ -10,3 +10,4 @@ export const NESTED_JOB_SECTORS = "nested_job_sectors"
 export const COMPANIES = 'companies'
 
 export const ALL_CAMPAIGNS = 'all_campaigns'
+export const UPDATE_JOBSEEKERSTATUS_TO_SELECTED = 'update_jobseekerstatus_to_selected'

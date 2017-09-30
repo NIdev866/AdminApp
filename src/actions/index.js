@@ -12,8 +12,24 @@ import {
   NESTED_JOB_SECTORS,
   COMPANIES,
   ALL_CAMPAIGNS,
-  ALL_JOBSEEKERS_BY_CAMPAIGN
+  ALL_JOBSEEKERS_BY_CAMPAIGN,
+  UPDATE_JOBSEEKERSTATUS_TO_SELECTED
 } from './types.js';
+
+
+
+/*============================================
+
+REASON FOR SUCH SHORT SYNTAX ON ACTIONS:
+
+
+in the main index.js file 'promise' middleware from
+'redux-promise' is used which allows for not having
+to use 'then' and 'catch' of typical promise and
+does everything magically in the background.
+
+
+=============================================*/
 
 
 
@@ -54,32 +70,61 @@ export function fetchCompanies(){
   }
 }
 
+/*export function fetchAllJobseekersByCampaignId(campaign_id){
+  return function(dispatch){
+    const request = axios.get(`${ROOT_URL}/campaigns/jobseekers/${campaign_id}`)
+    dispatch({ type: ALL_JOBSEEKERS_BY_CAMPAIGN, payload: request });
+  }
+}*/
+
+export const fetchAllJobseekersByCampaignId = campaign_id=>(
+  dispatch=>dispatch({ type: ALL_JOBSEEKERS_BY_CAMPAIGN, payload: axios.get(`${ROOT_URL}/campaigns/jobseekers/${campaign_id}`) })
+)
+
+
 // export function fetchAllJobseekersByCampaignId(campaign_id){
-//
-//   const request = axios.get(`${ROOT_URL}/campaigns/jobseekers/${campaign_id}`)
-//   return{
-//     type:ALL_JOBSEEKERS_BY_CAMPAIGN,
-//     payload: request
+//   //console.log('FROM ACTION FOR CAMPAIGN ' + campaign_id);
+//   return function(dispatch){
+
+//     axios.get(`${ROOT_URL}/campaigns/jobseekers/${campaign_id}`)
+//       .then(response => {
+//         //TO DZIALA, POKAZUJE ZE JEST ZAWSZE TYLKO JEDEN LUB 2 JOBSEEKEROW, PER CAMPAIGN
+//         //response.data.map(jobseeker=>console.log('FROM PROMISE IN ACTION FOR CAMPAIGN: ' + jobseeker.campaign_id))
+      
+//         dispatch({ type: ALL_JOBSEEKERS_BY_CAMPAIGN, payload: response.data });
+//       })
+//       .catch((err)=>{
+//         console.log('FROM ACTION: ' + err)
+//       })
 //   }
-//
 // }
 
-export function fetchAllJobseekersByCampaignId(campaign_id){
-  //console.log('FROM ACTION FOR CAMPAIGN ' + campaign_id);
-  return function(dispatch){
 
-    axios.get(`${ROOT_URL}/campaigns/jobseekers/${campaign_id}`)
-      .then(response => {
-        //TO DZIALA, POKAZUJE ZE JEST ZAWSZE TYLKO JEDEN LUB 2 JOBSEEKEROW, PER CAMPAIGN
-        response.data.map(jobseeker=>console.log('FROM PROMISE IN ACTION FOR CAMPAIGN: ' + jobseeker.campaign_id))
-      
-        dispatch({ type: ALL_JOBSEEKERS_BY_CAMPAIGN, payload: response.data });
-      })
-      .catch((err)=>{
-        console.log('FROM ACTION: ' + err)
-      })
-  }
+
+
+
+
+export const updateJobseekerJobStatus = ({job_status, jobseeker_id, campaign_id})=>{
+
+  //return axios.put(`${ROOT_URL}/jobseeker/select`, {job_status: job_status, params:{jobseeker_id: jobseeker_id, campaign_id: campaign_id}})
+  return axios.put(`${ROOT_URL}/jobseeker/select?jobseeker_id=${jobseeker_id}&campaign_id=${campaign_id}`, {job_status})
+  .then((res)=>{
+    console.log(res)
+  })
+  .catch((err)=>{
+    console.log({'ERROR FROM ACTION': err})
+  })
 }
+
+
+
+
+
+
+
+
+
+
 
 
 export function fetchAllCampaigns(){
@@ -94,15 +139,6 @@ export function fetchAllCampaigns(){
       })
   }
 }
-
-
-
-
-
-
-
-
-
 
 export function signinUser({ email, password }) {
   return function(dispatch) {
