@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { fetchAllCampaigns } from '../../actions'
+import _ from 'lodash'
+import { fetchAllCampaigns,fetchAllJobseekersByCampaignId } from '../../actions'
 import { connect } from "react-redux"
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 
@@ -17,19 +18,14 @@ class ApplicantsTabParent extends Component {
 
     return (
       <div style={{width: '95vw', margin: '0 auto'}}>
-      {this.props.allCampaigns && this.props.allCampaigns.map((campaign)=>{
-      	
-
+      {this.props.allCampaigns && _.map(this.props.allCampaigns, (campaign)=>{
+					//console.log('FROM COMPONENT: ' + campaign.campaign_id);
+				  this.props.fetchAllJobseekersByCampaignId(campaign.campaign_id)
 
           return(
             <div>
 
             <Card style={cardStyle}>
-
-
-
-
-
 
               <CardHeader
                 style={{height: "70px", textAlign: "left"}}
@@ -39,11 +35,7 @@ class ApplicantsTabParent extends Component {
               >
                 <p style={{fontSize: "18px", margin: "-10px", marginTop: "-30px", padding: "0"}}><b>{campaign.campaign_name}</b></p>
                 {/*<p style={{color: 'grey', fontSize: "14px", margin: "-10px", marginTop: "10px", padding: "0"}}>Starting on {DATE OF START HERE}</p>*/}
-			  </CardHeader>
-
-
-
-
+			  		</CardHeader>
 
 
               <CardText expandable={true} style={{paddingBottom: "1px", paddingTop: "1px"}}>
@@ -74,4 +66,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { fetchAllCampaigns })(ApplicantsTabParent)
+export default connect(mapStateToProps, { fetchAllCampaigns , fetchAllJobseekersByCampaignId})(ApplicantsTabParent)

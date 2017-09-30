@@ -1,16 +1,18 @@
 import React from 'react';
 import axios from 'axios';
+import _ from 'lodash'
 
 import { SUBMIT_BANK_DETAILS } from './types.js';
 
-import { 
-  AUTH_USER, 
-  UNAUTH_USER, 
+import {
+  AUTH_USER,
+  UNAUTH_USER,
   AUTH_ERROR,
   CLEAR_AUTH_ERROR,
   NESTED_JOB_SECTORS,
   COMPANIES,
-  ALL_CAMPAIGNS
+  ALL_CAMPAIGNS,
+  ALL_JOBSEEKERS_BY_CAMPAIGN
 } from './types.js';
 
 
@@ -18,7 +20,7 @@ import {
 const ROOT_URL = 'http://localhost:3000';
 
 export function submitBankDetails(){
-  return { 
+  return {
     type: SUBMIT_BANK_DETAILS
   }
 }
@@ -52,14 +54,38 @@ export function fetchCompanies(){
   }
 }
 
+// export function fetchAllJobseekersByCampaignId(campaign_id){
+//
+//   const request = axios.get(`${ROOT_URL}/campaigns/jobseekers/${campaign_id}`)
+//   return{
+//     type:ALL_JOBSEEKERS_BY_CAMPAIGN,
+//     payload: request
+//   }
+//
+// }
 
+export function fetchAllJobseekersByCampaignId(campaign_id){
+  //console.log('FROM ACTION FOR CAMPAIGN ' + campaign_id);
+  return function(dispatch){
+
+    axios.get(`${ROOT_URL}/campaigns/jobseekers/${campaign_id}`)
+      .then(response => {
+        //TO DZIALA, POKAZUJE ZE JEST ZAWSZE TYLKO JEDEN LUB 2 JOBSEEKEROW, PER CAMPAIGN
+        response.data.map(jobseeker=>console.log('FROM PROMISE IN ACTION FOR CAMPAIGN: ' + jobseeker.campaign_id))
+      
+        dispatch({ type: ALL_JOBSEEKERS_BY_CAMPAIGN, payload: response.data });
+      })
+      .catch((err)=>{
+        console.log('FROM ACTION: ' + err)
+      })
+  }
+}
 
 
 export function fetchAllCampaigns(){
   return function(dispatch){
     axios.get(`${ROOT_URL}/campaigns/all`)
       .then(response => {
-        console.log('BLAHHHH')
         dispatch({ type: ALL_CAMPAIGNS, payload: response.data });
       })
       .catch((err)=>{
